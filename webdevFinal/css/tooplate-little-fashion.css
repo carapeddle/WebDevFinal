@@ -34,6 +34,10 @@ form.d-flex input {
   border-color: #CC3700;
 }
 
+.d-none.d-lg-block {
+  margin-left: 15px;
+}
+
 
 /*added by Claire*/
 
