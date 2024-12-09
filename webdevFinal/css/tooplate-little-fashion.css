@@ -1,4 +1,3 @@
-/*
 
 Tooplate 2127 Little Fashion
 
@@ -45,12 +44,12 @@ form.d-flex input {
 
 
 :root {
-  --white-color:                #FFFFFF;
-  --primary-color:              #FF4400;
-  --section-bg-color:           #f0f8ff;
-  --dark-color:                 #000000;
-  --grey-color:                 #d0d1d1;
-  --p-color:                    #717275;
+  --white-color:                #fffefeee;
+  --primary-color:              #630000e1;
+  --section-bg-color:           #f4f4f488;
+  --dark-color:                 #0a0000;
+  --grey-color:                 #d0d0d0;
+  --p-color:                    #3d3838;
 
   --body-font-family:           'Inter', sans-serif;
 
