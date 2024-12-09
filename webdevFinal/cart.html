@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Virtual Volumes - Products</title>
+        <title>Virtual Volumes - Cart</title>
 
         <!-- CSS FILES -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,15 +15,14 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="css/shoppingcart.css"/>
 
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap-icons.css" rel="stylesheet">
+        <link href="css/shoppingcart.css" rel="stylesheet">
 
         <link rel="stylesheet" href="css/slick.css"/>
 
         <link href="css/tooplate-little-fashion.css" rel="stylesheet">
-        <script src="js/scripts1.js" defer></script>
 
     </head>
     
@@ -64,9 +63,8 @@
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link active" href="products.html">Products</a>
+                                <a class="nav-link" href="products.html">Products</a>
                             </li>
-
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Game</a>
                             </li>
@@ -88,35 +86,36 @@
 
                         <div class="col-lg-10 col-12">
                             <h1>
-                                <span class="d-block text-dark">Check Out</span>
-                                <span class="d-block text-primary">Our Collection</span>
+                                <span class="d-block text-primary">Your</span>
+                                <span class="d-block text-dark">Shopping Cart</span>
                             </h1>
                         </div>
                     </div>
                 </div>
             </header>
 
-            <section class="products section-padding">
+            <section class="product-detail section-padding">
                 <div class="container">
                     <div class="row">
-                        
-                        <div class="col-12">
-                            <h2 class="mb-5">Search for Books</h2>
-                        </div>
-                        <div class="form-group">
-                            <select name="genre" id="genrefilter" class="form-control">
-                                <option value="" selected disabled>Select a genre</option>
-                                <option value="all">All</option>
-                                <option value="fiction">Fiction</option>
-                                <option value="nonfiction">Non-fiction</option>
-                                <option value="youngadult">Young Adult</option>
-                            </select>
-                        </div>
-                        <div id="booklist"></div>
 
+                            <div id="cart"></div>
+                            <ul id="cartitems"></ul>
+                            <div id="cartContainer"></div> <!-- Container for cart items -->
+
+                            <form id="shoppingCartForm" action="checkoutform.html" method="POST">
+                                <div class="form-group">
+                                    <label for="subtotal">Total Price:</label>
+                                    <input type="number" name="subtotal" id="subtotal" class="form-control" placeholder="0" readonly>
+                                </div>
+                                <textarea id="result" class="output-box" rows="4" readonly placeholder="Result"></textarea>
+                                <button type="submit" id="placeorder">Checkout</button>
+                            </form>
+                    </div>
+                </div>
             </section>
 
         </main>
+
         <footer class="site-footer">
             <div class="container">
                 <div class="row">
@@ -155,6 +154,49 @@
             </div>
         </footer>
 
+        <!-- CART MODAL -->
+        <div class="modal fade" id="cart-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0">
+                    <div class="modal-header flex-column">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-6 col-12 mt-4 mt-lg-0">
+                                <img src="images/product/evan-mcdougall-qnh1odlqOmk-unsplash.jpeg" class="img-fluid product-image" alt="">
+                            </div>
+
+                            <div class="col-lg-6 col-12 mt-3 mt-lg-0">
+                                <h3 class="modal-title" id="exampleModalLabel">Tree pot</h3>
+
+                                <p class="product-price text-muted mt-3">$25</p>
+
+                                <p class="product-p">Quatity: <span class="ms-1">4</span></p>
+
+                                <p class="product-p">Colour: <span class="ms-1">Black</span></p>
+
+                                <p class="product-p pb-3">Size: <span class="ms-1">S/S</span></p>
+
+                                <div class="border-top mt-4 pt-3">
+                                    <p class="product-p"><strong>Total: <span class="ms-1">$100</span></strong></p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="row w-50">
+                            <button type="button" class="btn custom-btn cart-btn ms-lg-4">Checkout</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
         <!-- JAVASCRIPT FILES -->
         <script src="js/jquery.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>
@@ -162,6 +204,7 @@
         <script src="js/jQuery.headroom.js"></script>
         <script src="js/slick.min.js"></script>
         <script src="js/custom.js"></script>
+        <script src="js/cart1.js"></script>
 
 
     </body>
