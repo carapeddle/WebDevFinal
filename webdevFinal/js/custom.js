@@ -1,13 +1,16 @@
 /*added by Claire*/
 
-document.querySelector('form[role="search"]').addEventListener('submit', function (e) {
-  e.preventDefault();
-  const query = this.querySelector('input').value;
-  if (query) {
-      // Redirect to search results page or handle search
-      window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
-  }
-});
+const searchForm = document.querySelector('form[role="search"]');
+
+if (searchForm) {
+    searchForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const query = this.querySelector('input').value;
+        if (query) {
+            window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+        }
+    });
+}
 
 /*added by Claire*/
 
