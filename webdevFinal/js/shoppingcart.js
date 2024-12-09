@@ -11,6 +11,7 @@ let back = document.querySelector("#back");
 let ordersummary = document.querySelector("#ordersummary");
 const shipping = document.querySelector("#shipping");
 let cart = [];
+if (!cart) cart = [];
 let totalPrice = 0;
 let totalQuantity = 0;
 const bookList = document.getElementById("booklist");
@@ -126,16 +127,59 @@ function addToCart(bookId) {
     if (!bookInCart) {
         cart.push({ id: book.id, title: book.title, price: book.price, image: book.image, quantity: 1 });
     }
+    saveCartToLocalStorage(); // Save to localStorage
     updateCart();
+    alert(`${book.title} has been added to your cart!`);
 }
+
+
+function saveCartToLocalStorage() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+// Function to load the cart from localStorage and display it on the cart page
+function loadCart() {
+    let cart = JSON.parse(localStorage.getItem('cart')) || []; // Get the cart from localStorage
+    let cartContainer = document.getElementById('cartContainer'); // Container to display the cart items
+    let cartTotal = 0;
+
+    if (cart.length === 0) {
+        cartContainer.innerHTML = '<p>Your cart is empty.</p>';
+    } else {
+        cart.forEach(item => {
+            let itemElement = document.createElement('div');
+            itemElement.classList.add('cart-item');
+            itemElement.innerHTML = `
+                <img src="${item.image}" alt="${item.title}" class="cart-item-image" />
+                <div class="cart-item-details">
+                    <h4>${item.title}</h4>
+                    <p>Price: $${item.price}</p>
+                    <p>Quantity: ${item.quantity}</p>
+                    <p>Total: $${(item.price * item.quantity).toFixed(2)}</p>
+                </div>
+                <button class="remove-btn" onclick="removeFromCart(${item.id})">Remove</button>
+            `;
+            cartContainer.appendChild(itemElement);
+            cartTotal += item.price * item.quantity;
+        });
+
+        // Display total cart value
+        let totalElement = document.getElementById('cartTotal');
+        totalElement.textContent = `Total: $${cartTotal.toFixed(2)}`;
+    }
+}
+
+// Call loadCart when the page is loaded
+document.addEventListener('DOMContentLoaded', loadCart);
+
+
 // Update cart
 function updateCart() {
     const cartItems = document.getElementById("cartitems");
     cartItems.innerHTML = ""; // Clear previous cart items
     totalPrice = 0;
 
-    for (let x = 0; x < cart.length; x++) {
-        const cartItem = cart[x];
+    cart.forEach(cartItem => {
         const itemElement = document.createElement("li");
         itemElement.classList.add("cart-item", "booksize");
 
@@ -149,24 +193,20 @@ function updateCart() {
         `;
         cartItems.appendChild(itemElement);
 
-        // Triggered when the user enters the quantity of items.
         const quantityInput = itemElement.querySelector(".quantity");
         quantityInput.addEventListener("change", function(event){
             const newQuantity = parseInt(event.target.value, 10);
             updateQuantity(cartItem.id, newQuantity);
         });
 
-        // event listener to remove button
         const removeButton = itemElement.querySelector(".remove-btn");
         removeButton.addEventListener("click", function() {
             removeFromCart(cartItem.id);
         });
 
-        // total price
         totalPrice += cartItem.quantity * cartItem.price;
-    }
+    });
 
-    // subtotal display
     document.getElementById("subtotal").value = totalPrice.toFixed(2);
     total();
 }
@@ -222,43 +262,17 @@ function removeFromCart(bookId) {
 
 
 //new
-
-document.addEventListener('DOMContentLoaded', function() {
-    const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
-    const cartList = document.getElementById('cartitems');
-    const subtotalField = document.getElementById('subtotal');
-
-    function updateCart() {
-        cartList.innerHTML = ''; // Clear current cart list
-        let totalPrice = 0;
-
-        cartItems.forEach(item => {
-            const listItem = document.createElement('li');
-            listItem.textContent = `${item.title} - ${item.price}`;
-            cartList.appendChild(listItem);
-            totalPrice += parseFloat(item.price.replace('$', ''));
-        });
-
-        subtotalField.value = totalPrice.toFixed(2);
-    }
-
-    // Event listener for "Add to Cart" buttons
-    const addToCartButtons = document.querySelectorAll('.add-to-cart');
-    addToCartButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const title = button.getAttribute('data-title');
-            const price = button.getAttribute('data-price');
-
-            cartItems.push({ title, price });
-            localStorage.setItem('cart', JSON.stringify(cartItems));
-            updateCart();
-        });
-    });
-
-    updateCart(); // Initialize cart items on page load
+document.addEventListener("DOMContentLoaded", function () {
+    loadCartFromLocalStorage();
+    updateCart();
 });
 
-
+function loadCartFromLocalStorage() {
+    const savedCart = localStorage.getItem("cart");
+    if (savedCart) {
+        cart = JSON.parse(savedCart);
+    }
+}
 
 
 
