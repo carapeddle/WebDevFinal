@@ -22,15 +22,13 @@ form.d-flex input {
 }
 
 .custom-search-button {
-  background-color: #FF4400;
-  border-color: #FF4400;
+  background-color: #890303e1;
   color: white;
 }
 
 .custom-search-button:hover {
   color: white;
-  background-color: #CC3700;
-  border-color: #CC3700;
+  background-color: #3c0000e1;
 }
 
 .d-none.d-lg-block {
