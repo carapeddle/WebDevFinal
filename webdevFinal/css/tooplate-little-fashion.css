@@ -1,4 +1,48 @@
 
+Tooplate 2127 Little Fashion
+
+https://www.tooplate.com/view/2127-little-fashion
+
+*/
+
+
+/*---------------------------------------
+  CUSTOM PROPERTIES ( VARIABLES )             
+-----------------------------------------*/
+
+
+/*added by Claire*/
+
+form.d-flex {
+  align-items: center;
+}
+
+form.d-flex input {
+  max-width: 200px;
+}
+
+.custom-search-button {
+  background-color: #FF4400;
+  border-color: #FF4400;
+  color: white;
+}
+
+.custom-search-button:hover {
+  color: white;
+  background-color: #CC3700;
+  border-color: #CC3700;
+}
+
+.d-none.d-lg-block {
+  margin-left: 15px;
+}
+
+
+/*added by Claire*/
+
+
+
+
 :root {
   --white-color:                #fffefeee;
   --primary-color:              #630000e1;
