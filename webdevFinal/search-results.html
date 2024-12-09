@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Search Results</h1>
+        <p id="results-message"></p>
+        <div id="results-container" class="row"></div>
+    </div>
+
+    <script>
+        
+        const products = [
+            { id: 1, title: "Mystery Novel", description: "A thrilling mystery book", image: "images/product/anis-m-WnVrO-DvxcE-unsplash.jpeg" },
+            { id: 2, title: "Science Fiction", description: "Explore futuristic worlds", image: "images/product/evan-mcdougall-qnh1odlqOmk-unsplash.jpeg" },
+            { id: 3, title: "Fantasy Adventure", description: "Journey to magical realms", image: "images/product/jordan-nix-CkCUvwMXAac-unsplash.jpeg" },
+            { id: 4, title: "Self-Help Guide", description: "Improve yourself daily", image: "images/product/nature-zen-3Dn1BZZv3m8-unsplash.jpeg" },
+        ];
+
+        const params = new URLSearchParams(window.location.search);
+        const query = params.get('q')?.toLowerCase();
+
+        const resultsContainer = document.getElementById('results-container');
+        const resultsMessage = document.getElementById('results-message');
+
+        if (query) {
+            const filteredProducts = products.filter(product =>
+                product.title.toLowerCase().includes(query) || product.description.toLowerCase().includes(query)
+            );
+
+            if (filteredProducts.length > 0) {
+                resultsMessage.innerText = `Results for "${query}":`;
+                filteredProducts.forEach(product => {
+                   
+                    const productCard = document.createElement('div');
+                    productCard.className = 'col-md-4';
+                    productCard.innerHTML = `
+                        <div class="card mb-4">
+                            <img src="${product.image}" class="card-img-top" alt="${product.title}">
+                            <div class="card-body">
+                                <h5 class="card-title">${product.title}</h5>
+                                <p class="card-text">${product.description}</p>
+                            </div>
+                        </div>
+                    `;
+                    resultsContainer.appendChild(productCard);
+                });
+            } else {
+                resultsMessage.innerText = `No results found for "${query}".`;
+            }
+        } else {
+            resultsMessage.innerText = 'No query provided.';
+        }
+    </script>
+</body>
+</html>
