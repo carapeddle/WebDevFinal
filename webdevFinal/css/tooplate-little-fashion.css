@@ -754,6 +754,16 @@ section {
   padding-bottom: 7rem;
 }
 
+.section-padding-small {
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+}
+
+.section-padding-below {
+  padding-bottom: 6rem;
+  padding-top: 2rem;
+}
+
 .featured {
   background: var(--section-bg-color);
 }
