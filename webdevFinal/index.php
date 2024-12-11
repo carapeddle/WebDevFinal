@@ -45,6 +45,7 @@ session_start();
                         <?php if (isset($_SESSION['email'])): ?>
                             <span class="navbar-text">Welcome: <?php echo htmlspecialchars($_SESSION['email']); ?></span>
                             <a href="logout.php" class="btn btn-link ms-3">Logout</a>
+                            <a href="cart.html" class="bi-bag custom-icon"></a>
                         <?php else: ?>
                             <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
                             <a href="cart.html" class="bi-bag custom-icon"></a>
@@ -78,6 +79,7 @@ session_start();
                             <?php if (isset($_SESSION['email'])): ?>
                                 <span class="navbar-text">Welcome: <?php echo htmlspecialchars($_SESSION['email']); ?></span>
                                 <a href="logout.php" class="btn btn-link ms-3">Logout</a>
+                                <a href="cart.html" class="bi-bag custom-icon"></a>
                             <?php else: ?>
                                 <a href="sign-in.html" class="bi-person custom-icon me-3"></a>
                                 <a href="cart.html" class="bi-bag custom-icon"></a>
