@@ -1,57 +1,73 @@
+document.querySelector('form[role="search"]').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const query = this.querySelector('input').value;
+    if (query) {
+        // Store search in the backend
+        fetch('search-history.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query })
+        });
+
+        // Redirect to the search results page
+        window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+    }
+});
+
+// Show search history when typing
+const searchInput = document.querySelector('form[role="search"] input');
+searchInput.addEventListener('input', function () {
+    const query = this.value;
+    if (query) {
+        fetch('search-history.php?q=' + encodeURIComponent(query))
+            .then(response => response.json())
+            .then(data => {
+                // Create a dropdown or list below the input field
+                const dropdown = document.getElementById('search-history-dropdown') || document.createElement('ul');
+                dropdown.id = 'search-history-dropdown';
+                dropdown.style.position = 'absolute';
+                dropdown.style.backgroundColor = 'white';
+                dropdown.style.border = '1px solid #ccc';
+                dropdown.style.width = this.offsetWidth + 'px';
+                dropdown.innerHTML = '';
+
+                data.forEach(item => {
+                    const li = document.createElement('li');
+                    li.textContent = item;
+                    li.style.cursor = 'pointer';
+                    li.style.padding = '5px';
+                    li.addEventListener('click', () => {
+                        searchInput.value = item;
+                        dropdown.innerHTML = ''; // Hide the dropdown
+                    });
+                    dropdown.appendChild(li);
+                });
+
+                this.parentNode.appendChild(dropdown);
+            });
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const urlParams = new URLSearchParams(window.location.search);
 const query = urlParams.get("q");
 const searchResultsContainer = document.getElementById("search-results");
-
-
-const searchInput = document.getElementById('search-input');
-const suggestionsBox = document.getElementById('search-suggestions');
-
-// Fetch suggestions as the user types
-searchInput.addEventListener('input', function () {
-    const query = searchInput.value.trim();
-    if (query.length > 0) {
-        fetch('search-history.php')
-            .then(response => response.json())
-            .then(history => {
-                // Filter suggestions that match the query
-                const filteredHistory = history.filter(item =>
-                    item.toLowerCase().includes(query.toLowerCase())
-                );
-
-                // Display suggestions
-                suggestionsBox.innerHTML = filteredHistory.map(item =>
-                    `<div class="suggestion-item">${item}</div>`
-                ).join('');
-
-                // Add click event to suggestions
-                document.querySelectorAll('.suggestion-item').forEach(item => {
-                    item.addEventListener('click', function () {
-                        searchInput.value = this.textContent;
-                        suggestionsBox.innerHTML = ''; // Clear suggestions
-                    });
-                });
-            });
-    } else {
-        suggestionsBox.innerHTML = ''; // Clear suggestions when input is empty
-    }
-});
-
-// Store query in history on form submission
-document.getElementById('search-form').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const query = searchInput.value.trim();
-    if (query.length > 0) {
-        fetch('search-history.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `query=${encodeURIComponent(query)}`
-        }).then(() => {
-            window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
-        });
-    }
-});
-
-
 
 // Check if query exists
 if (query) {
