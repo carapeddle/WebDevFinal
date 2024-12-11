@@ -138,3 +138,7 @@ function saveCartToLocalStorage() {
 
 
 }
+window.addEventListener("unload", () => {
+    localStorage.removeItem("cart");
+    localStorage.removeItem("totalPrice");
+});
