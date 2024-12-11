@@ -165,3 +165,13 @@ text-align: center;
 .hidden {
 display: none;
 }
+
+
+
+
+
+.site-footer {
+    position:relative;
+    top:70%;
+  }
+
