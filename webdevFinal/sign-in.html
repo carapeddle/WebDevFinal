@@ -19,12 +19,27 @@
         <link href="css/bootstrap-icons.css" rel="stylesheet">
         <link rel="stylesheet" href="css/slick.css"/>
         <link href="css/tooplate-little-fashion.css" rel="stylesheet">
-        
+        <style>
+            .close-btn {
+                position: absolute;
+                top: 20px;
+                right: 50px;
+                font-size: 50px;
+                font-weight: bold;
+                color: #000;
+                text-decoration: none;
+                cursor: pointer;
+                z-index: 1000;
+            }
+            .close-btn:hover {
+                color: #f00;
+            }
+        </style>
 
     </head>
     
     <body>
-
+        <a href="index.php" class="close-btn">X</a>
         <section class="preloader">
             <div class="spinner">
                 <span class="sk-inner-circle"></span>
@@ -78,7 +93,7 @@
                 <div class="row">
 
                     <div class="col-lg-3 col-10 me-auto mb-4">
-                        <h4 class="text-white mb-3"><a href="index.html">Virtual</a>Volumes</h4>
+                        <h4 class="text-white mb-3"><a href="index.php">Virtual</a>Volumes</h4>
                         <p class="copyright-text text-muted mt-lg-5 mb-4 mb-lg-0">
                             Copyright © 2024 
                             <strong>Virtual Volumes</strong>
