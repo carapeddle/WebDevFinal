@@ -1,51 +1,45 @@
-const searchInput = document.querySelector('.form-control[placeholder="Search"]');
-const suggestionsBox = document.createElement('ul');
-suggestionsBox.id = 'search-history-dropdown';
-searchInput.parentElement.appendChild(suggestionsBox);
+const searchInput = document.querySelector('.form-control[aria-label="Search"]');
+const suggestionsBox = document.querySelector('.suggestions-box');
 
-// Fetch history from server when input is focused
-searchInput.addEventListener('focus', () => {
-    fetch('search-history.php')
+// Function to fetch and display search history
+function fetchSearchHistory(query) {
+    if (!query) {
+        suggestionsBox.innerHTML = ''; // Clear suggestions if input is empty
+        return;
+    }
+
+    fetch('search-history.php?q=' + encodeURIComponent(query))
         .then(response => response.json())
-        .then(history => {
-            suggestionsBox.innerHTML = '';
-            history.forEach(item => {
-                const listItem = document.createElement('li');
-                listItem.textContent = item;
-                listItem.classList.add('suggestion-item');
-                listItem.addEventListener('click', () => {
-                    searchInput.value = item;
-                    suggestionsBox.innerHTML = '';
+        .then(data => {
+            suggestionsBox.innerHTML = ''; // Clear previous suggestions
+            if (data.length > 0) {
+                data.forEach(item => {
+                    const suggestionItem = document.createElement('div');
+                    suggestionItem.classList.add('suggestion-item');
+                    suggestionItem.textContent = item;
+                    suggestionItem.addEventListener('click', () => {
+                        searchInput.value = item; // Fill input with clicked suggestion
+                        suggestionsBox.innerHTML = ''; // Clear suggestions box
+                    });
+                    suggestionsBox.appendChild(suggestionItem);
                 });
-                suggestionsBox.appendChild(listItem);
-            });
-        });
+            }
+        })
+        .catch(error => console.error('Error fetching search history:', error));
+}
+
+// Event listeners for search input
+searchInput.addEventListener('input', () => {
+    const query = searchInput.value;
+    fetchSearchHistory(query);
 });
 
-// Save new search term to the history
-document.querySelector('form[role="search"]').addEventListener('submit', function (e) {
-    e.preventDefault();
-    const query = searchInput.value.trim();
-    if (query) {
-        fetch('search-history.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ searchTerm: query })
-        }).then(() => {
-            window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
-        });
+// Close suggestions box when clicking outside
+document.addEventListener('click', (event) => {
+    if (!searchInput.contains(event.target) && !suggestionsBox.contains(event.target)) {
+        suggestionsBox.innerHTML = ''; // Clear suggestions
     }
 });
-
-// Hide suggestions when clicking outside
-document.addEventListener('click', (e) => {
-    if (!suggestionsBox.contains(e.target) && e.target !== searchInput) {
-        suggestionsBox.innerHTML = '';
-    }
-});
-
-
-
 
 
 
