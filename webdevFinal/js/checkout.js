@@ -15,6 +15,18 @@ document.addEventListener("DOMContentLoaded", function () {
         <p><strong>Total:</strong> $${savedTotalPrice.toFixed(2)}</p>
     `;
 });
+document.addEventListener("DOMContentLoaded", function () {
+    // Retrieve cart data and total price from localStorage
+    const savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const savedTotalPrice = parseFloat(localStorage.getItem("totalPrice")) || 0;
+
+    // Update the subtotal hidden field
+    const subtotalInput = document.querySelector("#subtotal");
+    subtotalInput.value = savedTotalPrice.toFixed(2);
+
+    // Call renderCartItems to display cart items
+    renderCartItems(savedCart, savedTotalPrice);
+});
 
 
 function renderCartItems(cart, totalPrice) {
