@@ -1,0 +1,58 @@
+html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Virtual Volumes - Game</title>
+
+    <!-- CSS Files -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/tooplate-little-fashion.css" rel="stylesheet">
+
+    <!-- Custom CSS for the game -->
+    <style>
+        #gameCanvas {
+            display: block;
+            margin: 0 auto;
+            border: 2px solid #000;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="index.html">
+            <strong><span>Virtual</span>Volumes</strong>
+        </a>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">Story</a></li>
+                <li class="nav-item"><a class="nav-link" href="products.html">Products</a></li>
+                <li class="nav-item"><a class="nav-link active" href="game.html">Game</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container text-center">
+    <h1 class="mt-5">Play Our Game</h1>
+    <p>Enjoy the p5.js game and win exciting prizes!</p>
+    <!-- p5.js Canvas -->
+    <div id="game-container">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+        <script src="js/game.js"></script>
+    </div>
+</main>
+
+<footer class="site-footer">
+    <div class="container">
+        <p class="text-center text-muted">© 2024 Virtual Volumes</p>
+    </div>
+</footer>
+
+</body>
+</html>

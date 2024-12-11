@@ -45,26 +45,13 @@ const books = [
 
 
 // use onchange to respond to filter changes
-genrefilter.onchange = function(event) {
-    event.preventDefault();
-    let selectedGenre = genrefilter.value;
-    bookList.innerHTML = "";
-    if (selectedGenre === 'all'){
-        for (let i = 0; i<books.length; i++){
-            const bookElement = document.createElement("div");
-            bookElement.classList.add("book", 'booksize');
-            bookElement.innerHTML = `
-                <img src="${books[i].image}" alt="${books[i].title}">
-                <h3>${books[i].title}</h3>
-                <p>Genre: ${books[i].genre}</p>
-                <p>Price: $${books[i].price.toFixed(2)}</p>
-                <button type='button' onclick="addToCart(${books[i].id})">Add to Cart</button>
-            `;
-            bookList.appendChild(bookElement);
-        }
-    } else if(selectedGenre === 'fiction'){
-        for (let i = 0; i<books.length; i++){
-            if(books[i].genre === 'Fiction'){
+if (genrefilter !== null) {
+    genrefilter.onchange = function(event) {
+        event.preventDefault();
+        let selectedGenre = genrefilter.value;
+        bookList.innerHTML = "";
+        if (selectedGenre === 'all'){
+            for (let i = 0; i<books.length; i++){
                 const bookElement = document.createElement("div");
                 bookElement.classList.add("book", 'booksize');
                 bookElement.innerHTML = `
@@ -76,35 +63,50 @@ genrefilter.onchange = function(event) {
                 `;
                 bookList.appendChild(bookElement);
             }
-        }
-    } else if(selectedGenre === 'nonfiction'){
-        for (let i = 0; i<books.length; i++){
-            if(books[i].genre === 'Non-fiction'){
-                const bookElement = document.createElement("div");
-                bookElement.classList.add("book", 'booksize');
-                bookElement.innerHTML = `
-                    <img src="${books[i].image}" alt="${books[i].title}">
-                    <h3>${books[i].title}</h3>
-                    <p>Genre: ${books[i].genre}</p>
-                    <p>Price: $${books[i].price.toFixed(2)}</p>
-                    <button type='button' onclick="addToCart(${books[i].id})">Add to Cart</button>
-                `;
-                bookList.appendChild(bookElement);
+        } else if(selectedGenre === 'fiction'){
+            for (let i = 0; i<books.length; i++){
+                if(books[i].genre === 'Fiction'){
+                    const bookElement = document.createElement("div");
+                    bookElement.classList.add("book", 'booksize');
+                    bookElement.innerHTML = `
+                        <img src="${books[i].image}" alt="${books[i].title}">
+                        <h3>${books[i].title}</h3>
+                        <p>Genre: ${books[i].genre}</p>
+                        <p>Price: $${books[i].price.toFixed(2)}</p>
+                        <button type='button' onclick="addToCart(${books[i].id})">Add to Cart</button>
+                    `;
+                    bookList.appendChild(bookElement);
+                }
             }
-        }
-    } else {
-        for (let i = 0; i<books.length; i++){
-            if(books[i].genre === 'Young Adult'){
-                const bookElement = document.createElement("div");
-                bookElement.classList.add("book", 'booksize');
-                bookElement.innerHTML = `
-                    <img src="${books[i].image}" alt="${books[i].title}">
-                    <h3>${books[i].title}</h3>
-                    <p>Genre: ${books[i].genre}</p>
-                    <p>Price: $${books[i].price.toFixed(2)}</p>
-                    <button type='button' onclick="addToCart(${books[i].id})">Add to Cart</button>
-                `;
-                bookList.appendChild(bookElement);
+        } else if(selectedGenre === 'nonfiction'){
+            for (let i = 0; i<books.length; i++){
+                if(books[i].genre === 'Non-fiction'){
+                    const bookElement = document.createElement("div");
+                    bookElement.classList.add("book", 'booksize');
+                    bookElement.innerHTML = `
+                        <img src="${books[i].image}" alt="${books[i].title}">
+                        <h3>${books[i].title}</h3>
+                        <p>Genre: ${books[i].genre}</p>
+                        <p>Price: $${books[i].price.toFixed(2)}</p>
+                        <button type='button' onclick="addToCart(${books[i].id})">Add to Cart</button>
+                    `;
+                    bookList.appendChild(bookElement);
+                }
+            }
+        } else {
+            for (let i = 0; i<books.length; i++){
+                if(books[i].genre === 'Young Adult'){
+                    const bookElement = document.createElement("div");
+                    bookElement.classList.add("book", 'booksize');
+                    bookElement.innerHTML = `
+                        <img src="${books[i].image}" alt="${books[i].title}">
+                        <h3>${books[i].title}</h3>
+                        <p>Genre: ${books[i].genre}</p>
+                        <p>Price: $${books[i].price.toFixed(2)}</p>
+                        <button type='button' onclick="addToCart(${books[i].id})">Add to Cart</button>
+                    `;
+                    bookList.appendChild(bookElement);
+                }
             }
         }
     }

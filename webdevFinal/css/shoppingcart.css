@@ -71,6 +71,7 @@ select, input[type="number"], button {
     border: 1px solid #ccc;
 }
 
+
 button {
     background-color: #630000e1;
     color: #ddd;
@@ -92,6 +93,7 @@ button:active {
     background-color: #0a0000;
     border-color: #630000e1;
 }
+
 
 #booklist {
     display: grid;
@@ -228,9 +230,6 @@ button:active {
 }
 
 
-
-
-
 form {
     background-color: #fafafa;
     max-width: 950px;
@@ -247,6 +246,8 @@ form label {
     font-weight: bold;
     color: #444;
 }
+
+
 
 form input[type="text"],
 form input[type="number"],
@@ -496,3 +497,4 @@ input, label {
 }
 
 */
+
