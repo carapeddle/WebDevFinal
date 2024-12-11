@@ -8,8 +8,8 @@ let back = document.querySelector("#back");
 let ordersummary = document.querySelector("#ordersummary");
 const shipping = document.querySelector("#shipping");
 // Initialize cart and total price from localStorage or defaults
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-let totalPrice = parseFloat(localStorage.getItem("totalPrice")) || 0;
+let cart = [];
+let totalPrice = 0;
 
 let totalQuantity = 0;
 const bookList = document.getElementById("booklist");
@@ -138,7 +138,4 @@ function saveCartToLocalStorage() {
 
 
 }
-window.addEventListener("unload", () => {
-    localStorage.removeItem("cart");
-    localStorage.removeItem("totalPrice");
-});
+
