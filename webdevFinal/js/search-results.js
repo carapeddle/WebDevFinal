@@ -1,54 +1,48 @@
+const searchInput = document.querySelector('.form-control[placeholder="Search"]');
+const suggestionsBox = document.createElement('ul');
+suggestionsBox.id = 'search-history-dropdown';
+searchInput.parentElement.appendChild(suggestionsBox);
+
+// Fetch history from server when input is focused
+searchInput.addEventListener('focus', () => {
+    fetch('search-history.php')
+        .then(response => response.json())
+        .then(history => {
+            suggestionsBox.innerHTML = '';
+            history.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.textContent = item;
+                listItem.classList.add('suggestion-item');
+                listItem.addEventListener('click', () => {
+                    searchInput.value = item;
+                    suggestionsBox.innerHTML = '';
+                });
+                suggestionsBox.appendChild(listItem);
+            });
+        });
+});
+
+// Save new search term to the history
 document.querySelector('form[role="search"]').addEventListener('submit', function (e) {
     e.preventDefault();
-    const query = this.querySelector('input').value;
+    const query = searchInput.value.trim();
     if (query) {
-        // Store search in the backend
         fetch('search-history.php', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query })
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ searchTerm: query })
+        }).then(() => {
+            window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
         });
-
-        // Redirect to the search results page
-        window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
     }
 });
 
-// Show search history when typing
-const searchInput = document.querySelector('form[role="search"] input');
-searchInput.addEventListener('input', function () {
-    const query = this.value;
-    if (query) {
-        fetch('search-history.php?q=' + encodeURIComponent(query))
-            .then(response => response.json())
-            .then(data => {
-                // Create a dropdown or list below the input field
-                const dropdown = document.getElementById('search-history-dropdown') || document.createElement('ul');
-                dropdown.id = 'search-history-dropdown';
-                dropdown.style.position = 'absolute';
-                dropdown.style.backgroundColor = 'white';
-                dropdown.style.border = '1px solid #ccc';
-                dropdown.style.width = this.offsetWidth + 'px';
-                dropdown.innerHTML = '';
-
-                data.forEach(item => {
-                    const li = document.createElement('li');
-                    li.textContent = item;
-                    li.style.cursor = 'pointer';
-                    li.style.padding = '5px';
-                    li.addEventListener('click', () => {
-                        searchInput.value = item;
-                        dropdown.innerHTML = ''; // Hide the dropdown
-                    });
-                    dropdown.appendChild(li);
-                });
-
-                this.parentNode.appendChild(dropdown);
-            });
+// Hide suggestions when clicking outside
+document.addEventListener('click', (e) => {
+    if (!suggestionsBox.contains(e.target) && e.target !== searchInput) {
+        suggestionsBox.innerHTML = '';
     }
 });
-
-
 
 
 
