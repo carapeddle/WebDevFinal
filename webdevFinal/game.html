@@ -1,4 +1,5 @@
-html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,11 +42,9 @@ html lang="en">
 <main class="container text-center">
     <h1 class="mt-5">Play Our Game</h1>
     <p>Enjoy the p5.js game and win exciting prizes!</p>
+
     <!-- p5.js Canvas -->
-    <div id="game-container">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
-        <script src="js/game.js"></script>
-    </div>
+    <div id="game-container"></div>
 </main>
 
 <footer class="site-footer">
@@ -53,6 +52,11 @@ html lang="en">
         <p class="text-center text-muted">© 2024 Virtual Volumes</p>
     </div>
 </footer>
+
+<!-- p5.js Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.js"></script>
+<!-- Game Script -->
+<script src="js/game.js"></script>
 
 </body>
 </html>
