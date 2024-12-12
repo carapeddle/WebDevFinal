@@ -2,6 +2,10 @@ let player;
 let items = [];
 let score = 0;
 let itemSpeed = 3;
+let discountCode = ""; 
+let isGameRunning = true; 
+let isGamePaused = false;
+
 let books = [
     { id: 1, title: "The Wishing Game", genre: "Fiction", price: 10, image: "https://m.media-amazon.com/images/I/81ANaZRiSpL._AC_UF1000,1000_QL80_.jpg" },
     { id: 2, title: "Demon Copperhead", genre: "Fiction", price: 15, image: "https://m.media-amazon.com/images/I/918DFDx5ZRL.jpg" },
@@ -10,7 +14,7 @@ let books = [
     { id: 5, title: "By All Means Available: Memoirs of a Life...", genre: "Non-fiction", price: 24.99, image: "https://m.media-amazon.com/images/I/71bzNhSiOzL._UF1000,1000_QL80_.jpg" },
     { id: 6, title: "Harry Potter and the Philosopher's Stone", genre: "Young Adult", price: 12, image: "https://m.media-amazon.com/images/I/81q77Q39nEL._AC_UF1000,1000_QL80_.jpg" },
     { id: 7, title: "Harry Potter and the Chamber of Secrets", genre: "Young Adult", price: 10, image: "https://m.media-amazon.com/images/I/918wxhKJaPL._AC_UF1000,1000_QL80_.jpg" },
-]
+];
 
 let bookImages = [];
 
@@ -23,11 +27,24 @@ function preload() {
 function setup() {
     createCanvas(400, 600);
     player = new Player();
+
+    const stopButton = createButton("Stop Game");
+    stopButton.position(10, 10);
+    stopButton.mousePressed(stopGame);
+
+    const pauseButton = createButton("Pause/Resume");
+    pauseButton.position(100, 10);
+    pauseButton.mousePressed(togglePause);
+
+    const restartButton = createButton("Restart Game");
+    restartButton.position(220, 10);
+    restartButton.mousePressed(restartGame);
 }
 
 function draw() {
-    background(0);
+    if (!isGameRunning || isGamePaused) return;
 
+    background(0);
     player.show();
     player.move();
 
@@ -35,24 +52,20 @@ function draw() {
         items.push(new Item());
     }
 
-    if (frameCount % 300 === 0) {
-      itemSpeed += 1;
-    }
-
     for (let i = items.length - 1; i >= 0; i--) {
         items[i].show();
         items[i].update();
         if (items[i].hits(player)) {
             score += 10;
-            items.splice(i, 1); 
+            items.splice(i, 1);
         } else if (items[i].offscreen()) {
-            items.splice(i, 1); 
+            items.splice(i, 1);
         }
     }
 
     fill(255);
     textSize(24);
-    text(`Score: ${score}`, 10, 30);
+    text(`Score: ${score}`, 10, 50);
 }
 
 class Player {
@@ -82,16 +95,16 @@ class Item {
     constructor() {
         this.x = random(width);
         this.y = 0;
-        this.size = 50; 
-        this.image = random(bookImages); 
+        this.size = 50;
+        this.image = random(bookImages);
     }
 
     show() {
-        image(this.image, this.x, this.y, this.size, this.size); 
+        image(this.image, this.x, this.y, this.size, this.size);
     }
 
     update() {
-        this.y += itemSpeed; 
+        this.y += itemSpeed;
     }
 
     hits(player) {
@@ -104,6 +117,28 @@ class Item {
     }
 
     offscreen() {
-        return this.y > height; 
+        return this.y > height;
     }
+}
+
+function stopGame() {
+    isGameRunning = false;
+
+    if (score >= 500) {
+        discountCode = `DISCOUNT-${Math.floor(Math.random() * 10000)}`;
+        alert(`Congratulations! Your score is ${score}. Use this discount code: ${discountCode}`);
+    } else {
+        alert(`Your score is ${score}. Reach a score of 500 to earn a discount!`);
+    }
+}
+
+function togglePause() {
+    isGamePaused = !isGamePaused;
+}
+
+function restartGame() {
+    score = 0;
+    items = [];
+    isGameRunning = true;
+    isGamePaused = false;
 }
