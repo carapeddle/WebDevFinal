@@ -13,11 +13,7 @@
     height: auto; 
 }
 
-main{
-    position:absolute;
-    top:10%;
-    margin-left: 80px;
-}
+
 .book h3 {
     font-size: 1em;
     margin: 10px 0 5px;
@@ -36,8 +32,6 @@ main{
 }
 
 .back-btn {
-    position:absolute;
-    bottom:-50%;
     display: inline-block;
     margin-top: 20px;
     padding: 10px 20px;
@@ -166,10 +160,7 @@ text-align: center;
 display: none;
 }
 
-
-
 .site-footer {
     position:relative;
     top:70%;
   }
-
