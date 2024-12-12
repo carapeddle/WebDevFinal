@@ -1,16 +1,19 @@
+
 const searchInput = document.querySelector('.form-control[aria-label="Search"]');
 const suggestionsBox = document.querySelector('.suggestions-box');
 
-function fetchSearchHistory(query) {
-    if (!query) {
-        suggestionsBox.innerHTML = ''; 
-        return;
-    }
 
+function fetchSearchHistory(query = '') {
     fetch('search-history.php?q=' + encodeURIComponent(query))
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             suggestionsBox.innerHTML = ''; 
+
             if (data.length > 0) {
                 data.forEach(item => {
                     const suggestionItem = document.createElement('div');
@@ -18,30 +21,33 @@ function fetchSearchHistory(query) {
                     suggestionItem.textContent = item;
                     suggestionItem.addEventListener('click', () => {
                         searchInput.value = item;
-                        suggestionsBox.innerHTML = ''; 
+                        suggestionsBox.innerHTML = '';
                     });
                     suggestionsBox.appendChild(suggestionItem);
                 });
+
+                suggestionsBox.style.display = 'block'; 
+            } else {
+                suggestionsBox.style.display = 'none';
             }
         })
         .catch(error => console.error('Error fetching search history:', error));
 }
 
-
 searchInput.addEventListener('input', () => {
-    const query = searchInput.value;
+    const query = searchInput.value.trim();
     fetchSearchHistory(query);
 });
 
+searchInput.addEventListener('focus', () => {
+    fetchSearchHistory();
+});
 
 document.addEventListener('click', (event) => {
     if (!searchInput.contains(event.target) && !suggestionsBox.contains(event.target)) {
-        suggestionsBox.innerHTML = ''; 
+        suggestionsBox.style.display = 'none';
     }
 });
-
-
-
 
 
 

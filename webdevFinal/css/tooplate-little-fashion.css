@@ -38,9 +38,6 @@ form.d-flex input {
 
 
 
-
-
-
 .suggestions-box {
   position: absolute;
   background: white;
@@ -50,6 +47,7 @@ form.d-flex input {
   overflow-y: auto;
   z-index: 1000;
   width: 100%;
+  display: none; /* Initially hidden */
 }
 
 .suggestion-item {
