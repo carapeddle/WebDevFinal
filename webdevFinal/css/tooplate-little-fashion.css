@@ -780,13 +780,28 @@ section {
   padding-bottom: 7rem;
 }
 
+.section-padding-med {
+  padding-top: 6rem;
+  padding-bottom: 1rem;
+}
+
 .section-padding-small {
   padding-top: 5rem;
   padding-bottom: 3rem;
 }
 
+.section-padding-xsmallt {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.section-padding-xsmall {
+  padding-top: 4rem;
+  padding-bottom: 2rem;
+}
+
 .section-padding-below {
-  padding-bottom: 6rem;
+  padding-bottom: 4rem;
   padding-top: 2rem;
 }
 
