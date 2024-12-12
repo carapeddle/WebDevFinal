@@ -16,6 +16,9 @@ let totalPrice = 0;
 let totalQuantity = 0;
 const bookList = document.getElementById("booklist");
 let genrefilter = document.getElementById('genrefilter');
+let discountAmount = 0; 
+let discountCode = ""; 
+let isDiscountApplied = false;
 
 // Array of books
 const books = [
@@ -132,6 +135,31 @@ function addToCart(bookId) {
     alert(`${book.title} has been added to your cart!`);
 }
 
+function setDiscountCode(code) {
+    discountCode = code; 
+    alert(`Your discount code is: ${discountCode}`);
+}
+
+document.getElementById("apply-discount").addEventListener("click", function () {
+    const discountInput = document.getElementById("discount-code").value;
+    const discountMessage = document.getElementById("discount-message");
+
+    if (discountInput === discountCode) {
+        if (!isDiscountApplied) {
+            discountAmount = 10;
+            isDiscountApplied = true;
+            discountMessage.textContent = `Discount applied! You saved $${discountAmount.toFixed(2)}.`;
+            discountMessage.style.color = "green";
+            updateCartTotal();
+        } else {
+            discountMessage.textContent = "Discount already applied.";
+            discountMessage.style.color = "orange";
+        }
+    } else {
+        discountMessage.textContent = "Invalid discount code.";
+        discountMessage.style.color = "red";
+    }
+});
 
 function saveCartToLocalStorage() {
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -431,49 +459,41 @@ formobj1.addEventListener("submit", function (event) {
     // Include details such as:
     // Customer information, Products purchased, Quantity, Current date, Subtotal and grand total.
     // Mask the credit card number, displaying only the last four digits (e.g., ************1234).
-function receipt(details) {
-    console.log(details);
-    const receiptWindow = window.open();
-    receiptWindow.document.write(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>Receipt</title>
-    <link rel='stylesheet'  href='macro6.css' />
-    </head>
-    <body>
-        <header>
-            <h1>Welcome to Cara's Store</h1>
-            <p>Thank you for supporting my business!!</p>
-        </header>
-        <main>
-            <div id='heading'></div>
+    function receipt(details) {
+        const grandTotal = Math.max(totalPrice - discountAmount + shippingCost, 0); // Ensure total is not negative
+        const receiptWindow = window.open();
+        receiptWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Receipt</title>
+            <link rel='stylesheet' href='macro6.css' />
+        </head>
+        <body>
+            <header>
+                <h1>Welcome to Virtual Volumes</h1>
+                <p>Thank you for shopping with us!</p>
+            </header>
+            <main>
                 <h2>Customer Receipt</h2>
-                <h3>Thank you for shopping at my store, ${details.firstName}! Come back soon!</h3>
+                <h3>Thank you, ${details.firstName}, for your order!</h3>
                 <p><strong>Date:</strong> ${new Date().toString()}</p>
-                <p>${details.shippingmessage}</p>
-            </div>
-            <hr>
-            <div id='purchaseinfo'>
-                ${text}
-            </div>
-            <div id='totals'>
-                <p><strong>Subtotal:</strong> $${(totalPrice).toFixed(2)}</p>
-                <p><strong>Total Paid:</strong> $${(totalPrice + shippingCost).toFixed(2)}</p>
-            </div>
-            <div id='cardinfo'>
-                <p><strong>Name on Card:</strong> ${details.cardname}</p>
-                <p><strong>Card Number:</strong> ${details.cardnumber}</p>
-            </div>
-            <hr>
-            <div id='customer'>
-                <p><strong>Name:</strong> ${details.firstName} ${details.lastName}</p>
-                <p><strong>Email:</strong> ${details.email}</p>
-                <p><strong>Phone:</strong> ${details.phone}</p>
-            </div>
-        </main>
-    </body>
-    </html>
-    `);
-    receiptWindow.document.close();
-}
+                <div id="purchaseinfo">${text}</div>
+                <div id="totals">
+                    <p><strong>Subtotal:</strong> $${totalPrice.toFixed(2)}</p>
+                    <p><strong>Discount:</strong> -$${discountAmount.toFixed(2)}</p>
+                    <p><strong>Shipping:</strong> $${shippingCost.toFixed(2)}</p>
+                    <p><strong>Grand Total:</strong> $${grandTotal.toFixed(2)}</p>
+                </div>
+                <hr>
+                <div id="customer">
+                    <p><strong>Name:</strong> ${details.firstName} ${details.lastName}</p>
+                    <p><strong>Email:</strong> ${details.email}</p>
+                    <p><strong>Phone:</strong> ${details.phone}</p>
+                </div>
+            </main>
+        </body>
+        </html>
+        `);
+        receiptWindow.document.close();
+    }
