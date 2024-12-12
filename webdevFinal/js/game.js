@@ -2,9 +2,10 @@ let player;
 let items = [];
 let score = 0;
 let itemSpeed = 3;
-let discountCode = ""; 
+let bookImages = [];
+let gameDuration = 60; 
+let timer = gameDuration; 
 let isGameRunning = true; 
-let isGamePaused = false;
 
 let books = [
     { id: 1, title: "The Wishing Game", genre: "Fiction", price: 10, image: "https://m.media-amazon.com/images/I/81ANaZRiSpL._AC_UF1000,1000_QL80_.jpg" },
@@ -16,35 +17,34 @@ let books = [
     { id: 7, title: "Harry Potter and the Chamber of Secrets", genre: "Young Adult", price: 10, image: "https://m.media-amazon.com/images/I/918wxhKJaPL._AC_UF1000,1000_QL80_.jpg" },
 ];
 
-let bookImages = [];
-
 function preload() {
-    books.forEach(book => {
+
+    books.forEach((book) => {
         bookImages.push(loadImage(book.image));
     });
 }
 
 function setup() {
-    createCanvas(400, 600);
+    const canvas = createCanvas(400, 600);
+    canvas.parent("game-container");
+
     player = new Player();
 
-    const stopButton = createButton("Stop Game");
-    stopButton.position(10, 10);
-    stopButton.mousePressed(stopGame);
-
-    const pauseButton = createButton("Pause/Resume");
-    pauseButton.position(100, 10);
-    pauseButton.mousePressed(togglePause);
-
-    const restartButton = createButton("Restart Game");
-    restartButton.position(220, 10);
-    restartButton.mousePressed(restartGame);
+    setInterval(() => {
+        if (isGameRunning) {
+            timer--;
+            if (timer <= 0) {
+                endGame();
+            }
+        }
+    }, 1000); 
 }
 
 function draw() {
-    if (!isGameRunning || isGamePaused) return;
+    if (!isGameRunning) return; 
 
     background(0);
+
     player.show();
     player.move();
 
@@ -55,6 +55,7 @@ function draw() {
     for (let i = items.length - 1; i >= 0; i--) {
         items[i].show();
         items[i].update();
+
         if (items[i].hits(player)) {
             score += 10;
             items.splice(i, 1);
@@ -66,6 +67,7 @@ function draw() {
     fill(255);
     textSize(24);
     text(`Score: ${score}`, 10, 50);
+    text(`Time Left: ${timer}s`, 10, 80);
 }
 
 class Player {
@@ -93,18 +95,18 @@ class Player {
 
 class Item {
     constructor() {
-        this.x = random(width);
-        this.y = 0;
-        this.size = 50;
-        this.image = random(bookImages);
+        this.x = random(width); 
+        this.y = 0; 
+        this.size = 50; 
+        this.image = random(bookImages); 
     }
 
     show() {
-        image(this.image, this.x, this.y, this.size, this.size);
+        image(this.image, this.x, this.y, this.size, this.size); 
     }
 
     update() {
-        this.y += itemSpeed;
+        this.y += itemSpeed; 
     }
 
     hits(player) {
@@ -117,28 +119,16 @@ class Item {
     }
 
     offscreen() {
-        return this.y > height;
+        return this.y > height; 
     }
 }
 
-function stopGame() {
+function endGame() {
     isGameRunning = false;
-
     if (score >= 500) {
-        discountCode = `DISCOUNT-${Math.floor(Math.random() * 10000)}`;
+        const discountCode = `DISCOUNT-${Math.floor(Math.random() * 10000)}`;
         alert(`Congratulations! Your score is ${score}. Use this discount code: ${discountCode}`);
     } else {
-        alert(`Your score is ${score}. Reach a score of 500 to earn a discount!`);
+        alert(`Game Over! Your score is ${score}. You need at least 500 points to earn a discount.`);
     }
-}
-
-function togglePause() {
-    isGamePaused = !isGamePaused;
-}
-
-function restartGame() {
-    score = 0;
-    items = [];
-    isGameRunning = true;
-    isGamePaused = false;
 }
