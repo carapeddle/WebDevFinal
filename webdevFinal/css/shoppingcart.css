@@ -14,25 +14,19 @@ body {
 header {
     background-color: #3a3a3a;
     color: #fff;
-    text-align: center;
     padding: 30px 30px 40px 30px;
     margin-bottom: 20px;
+
 }
 
+
 header h1 {
-    font-size: 40px;
+    font-size: 50px;
     margin-bottom: 8px;
 }
 
 header p {
     font-size: 19px;
-}
-
-main {
-    position: relative;
-    max-width: 1200px;
-    margin: 25px auto;
-    padding: 0px 25px;
 }
 
 main h3 {

@@ -25,6 +25,18 @@
         <link href="css/tooplate-little-fashion.css" rel="stylesheet">
         <script src="js/scripts1.js" defer></script>
 
+        <style>
+            .searchform {
+                border: none; 
+                box-shadow: none; 
+                padding: 0; 
+                margin: 0; 
+            }
+            
+            .d-none.d-lg-block {
+                margin-left: 15px;
+            }
+        </style>
     </head>
     
     <body>
@@ -74,11 +86,11 @@
                         </ul>
 
                         <!--Edited by Claire-->
-                        <form class="d-flex ms-3" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn custom-search-button" type="submit">
-                                <i class="bi bi-search"></i>
-                            </button>
+                       <form class="d-flex ms-3 searchform" role="search">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn custom-search-button" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
                         </form>
                         <!--Edited by Claire-->
 
@@ -91,14 +103,14 @@
                 </div>
             </nav>
 
-            <header class="site-header section-padding d-flex justify-content-center align-items-center">
+            <header class="site-header section-padding d-flex">
                 <div class="container">
                     <div class="row">
 
-                        <div class="col-lg-10 col-12">
+                        <div class="col-12">
                             <h1>
-                                <span class="d-block text-dark">Check Out</span>
-                                <span class="d-block text-primary">Our Collection</span>
+                                <span class="d-block text-dark" style="text-align: center;">Check Out</span>
+                                <span class="d-block text-primary" style="text-align: center;">Our Collection</span>
                             </h1>
                         </div>
                     </div>
@@ -172,7 +184,7 @@
         <script src="js/jQuery.headroom.js"></script>
         <script src="js/slick.min.js"></script>
         <script src="js/custom.js"></script>
-        <script src="js/search-results.js"></script>
+
 
     </body>
 </html>
