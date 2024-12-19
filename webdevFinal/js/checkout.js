@@ -171,7 +171,7 @@ function validateForm(event) {
         isValid = false;
     }
     if (!cardNumber || !validateCreditCard(cardNumber)) {
-        errorMessage = "Please enter a valid credit card number.\n";
+        errorMessage = "Please enter a valid 16-digit credit card number.\n";
         isValid = false;
     }
     if (!cardName) {
